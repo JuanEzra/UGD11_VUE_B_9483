@@ -121,23 +121,23 @@
                 keyword: '',         
                 headers: [             
                     {               
-                        text: 'No',               
+                        text: 'no',               
                         value: 'no',             
                     },             
                     {               
-                        text: 'Merk',               
+                        text: 'merk',               
                         value: 'merk'             
                     },             
                     {               
-                        text: 'Type',               
+                        text: 'type',               
                         value: 'type'             
                     },             
                     {               
-                        text: 'LicensePlate',               
+                        text: 'licensePlate',               
                         value: 'licensePlate'             
                     },   
                     {               
-                        text: 'Created_At',               
+                        text: 'created_at',               
                         value: 'created_at'             
                     },          
                     {               
@@ -156,7 +156,7 @@
                     licensePlate : '',
                     created_at : ''         
                 },         
-                vehicles : new FormData,         
+                vehicle : new FormData,         
                 typeInput: 'new',         
                 errors : '',         
                 updatedId : '',       
