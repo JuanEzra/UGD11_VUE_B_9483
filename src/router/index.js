@@ -18,7 +18,7 @@ const routes = [
     },
     {
         name: 'VehiclesController',
-        path: '',
+        path: 'vehicles',
         component: loadView('vehiclesController')
     }
     ]

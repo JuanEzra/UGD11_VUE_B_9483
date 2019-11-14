@@ -2,7 +2,7 @@
     <v-container>     
         <v-card>       
             <v-container grid-list-md mb-0> 
-            <h2 class="text-md-center">Data User</h2>         
+            <h2 class="text-md-center">Data Mobil</h2>         
             <v-layout row wrap style="margin:10px">           
                 <v-flex xs6>               
                     <v-btn               
@@ -14,7 +14,7 @@
                     @click="dialog = true"               
                     >               
                     <v-icon size="18" class="mr-2">mdi-pencil-plus</v-icon>                   
-                        Tambah User               
+                        Tambah Mobil             
                     </v-btn>           
                 </v-flex>           
                 <v-flex xs6 class="text-right">               
@@ -29,7 +29,7 @@
  
         <v-data-table             
             :headers="headers"             
-            :items="users"             
+            :items="vehicles"             
             :search="keyword"             
             :loading="load"           
             >             
@@ -37,9 +37,10 @@
                 <tbody>                 
                     <tr v-for="(item,index) in items" :key="item.id">                   
                         <td>{{ index + 1 }}</td>                   
-                        <td>{{ item.name }}</td>                   
-                        <td>{{ item.email}}</td>                   
-                        <td>{{ item.password }}</td>                   
+                        <td>{{ item.merk }}</td>                   
+                        <td>{{ item.type}}</td>                   
+                        <td>{{ item.licensePlate}}</td>
+                        <td>{{ item.created_at}}</td>                                           
                         <td class="text-center">                     
                             <v-btn                        
                             icon                       
@@ -67,23 +68,23 @@
 <v-dialog v-model="dialog" persistent max-width="600px">       
     <v-card>         
         <v-card-title>           
-            <span class="headline">User Profile</span>         
+            <span class="headline">Profil Kendaraan</span>         
         </v-card-title>         
         <v-card-text>           
             <v-container>             
                 <v-row>               
                     <v-col cols="12">                 
-                        <v-text-field label="Merk kendaraan*" v-model="form.merk" required></v-text-field>              
+                        <v-text-field label="Name*" v-model="form.merk" required></v-text-field>              
                     </v-col>               
                     <v-col cols="12">                 
-                        <v-text-field label="Tipe kendaraan*" v-model="form.type" required></v-text-field>               
+                        <v-text-field label="type*" v-model="form.type" required></v-text-field>               
                     </v-col>               
                     <v-col cols="12">                 
-                        <v-text-field label="Plat nomor*" v-model="form.licensePlate" required></v-text-field>               
-                    </v-col>          
+                        <v-text-field label="licensePlate*" v-model="form.licensePlate" required></v-text-field>               
+                    </v-col>
                     <v-col cols="12">                 
-                        <v-text-field label="Tanggal dan waktu dimasukkan*" v-model="form.created_at" required></v-text-field>               
-                    </v-col>   
+                        <v-text-field label="created_at*" v-model="form.created_at" required></v-text-field>               
+                    </v-col>             
                 </v-row>           
             </v-container>           
             <small>*indicates required field</small>         
@@ -132,29 +133,30 @@
                         value: 'type'             
                     },             
                     {               
-                        text: 'License Plate',               
-                        value: 'licenseplate'             
+                        text: 'LicensePlate',               
+                        value: 'licensePlate'             
                     },   
                     {               
-                        text: 'Create At',               
-                        value: 'createat'             
-                    },             
+                        text: 'Created_At',               
+                        value: 'created_at'             
+                    },          
                     {               
                         text: 'Aksi',               
                         value: null             
                     },         
                 ],         
-                users: [],         
+                vehicles: [],         
                 snackbar: false,          
                 color: null,         
                 text: '',          
                 load: false, 
                 form: {            
-                    name : '',           
-                    email : '',           
-                    password : ''         
+                    merk : '',           
+                    type : '',           
+                    licensePlate : '',
+                    created_at : ''         
                 },         
-                user : new FormData,         
+                vehicles : new FormData,         
                 typeInput: 'new',         
                 errors : '',         
                 updatedId : '',       
@@ -162,19 +164,19 @@
             },     
             methods:{         
                 getData(){             
-                    var uri = this.$apiUrl + '/user'             
+                    var uri = this.$apiUrl + '/vehicle'             
                     this.$http.get(uri).then(response =>{                 
-                        this.users=response.data.message             
+                        this.vehicles=response.data.message             
                         })               
                     },         
                     sendData(){             
-                        this.user.append('merk', this.form.merk);             
-                        this.user.append('type', this.form.type);             
-                        this.user.append('licenseplate', this.form.licensePlate); 
-                        this.user.append('createat', this.form.create_at);            
-                        var uri =this.$apiUrl + '/user'             
+                        this.vehicle.append('merk', this.form.merk);             
+                        this.vehicle.append('type', this.form.type);             
+                        this.vehicle.append('licensePlate', this.form.licensePlate);     
+                         this.vehicle.append('created_at', this.form.created_at);          
+                        var uri =this.$apiUrl + '/vehicle'             
                         this.load = true             
-                        this.$http.post(uri,this.user).then(response =>{               
+                        this.$http.post(uri,this.vehicle).then(response =>{               
                             this.snackbar = true; //mengaktifkan snackbar               
                             this.color = 'green'; //memberi warna snackbar               
                             this.text = response.data.message; //memasukkan pesan ke snackbar               
@@ -191,13 +193,13 @@
                         })         
                     },         
                     updateData(){             
-                        this.user.append('merk', this.form.merk);             
-                        this.user.append('type', this.form.type);             
-                        this.user.append('licenseplate', this.form.licensePlate); 
-                        this.user.append('createat', this.form.create_at);             
-                        var uri = this.$apiUrl + '/user/' + this.updatedId;             
+                        this.vehicle.append('merk', this.form.merk);             
+                        this.vehicle.append('type', this.form.type);             
+                        this.vehicle.append('licensePlate', this.form.licensePlate);     
+                        this.vehicle.append('created_at', this.form.created_at);             
+                        var uri = this.$apiUrl + '/vehicle/' + this.updatedId;             
                         this.load = true             
-                        this.$http.post(uri,this.user).then(response =>{ 
+                        this.$http.post(uri,this.vehicle).then(response =>{ 
                         this.snackbar = true; //mengaktifkan snackbar               
                         this.color = 'green'; //memberi warna snackbar               
                         this.text = response.data.message; //memasukkan pesan ke snackbar               
@@ -219,13 +221,13 @@
                     this.typeInput = 'edit';           
                     this.dialog = true;           
                     this.form.merk = item.merk;           
-                    this.form.type = item.type;           
-                    this.form.licensePlate = item.licensePlate;
-                    this.form.create_at = item.create_at;           
+                    this.form.type = item.type;
+                    this.form.licensePlate = item.licensePlate;           
+                    this.form.created_at = item.created_at;           
                     this.updatedId = item.id         
                 },         
                 deleteData(deleteId){ //mengahapus data             
-                var uri = this.$apiUrl + '/user/' + deleteId; //data dihapus berdasarkan id 
+                var uri = this.$apiUrl + '/vehicle/' + deleteId; //data dihapus berdasarkan id 
                 this.$http.delete(uri).then(response =>{                 
                     this.snackbar = true;                 
                     this.text = response.data.message;                 
@@ -253,7 +255,7 @@
                     merk : '',               
                     type : '',               
                     licensePlate : '',
-                    create_at : ''       
+                    created_at : ''             
                     }         
                 }     
             },     
