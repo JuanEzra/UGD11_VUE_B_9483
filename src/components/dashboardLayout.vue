@@ -59,21 +59,23 @@
  >
  PAW-UAJY
  </v-toolbar-title>
- </v-app-bar>
- <VContent >
- <router-view />
- </VContent>
- </div>
-</template>
-<script>
- export default {
- data () {
- return {
- drawer: null,
- items: [
- { title: 'User Controller', icon: 'mdi-human-male' },
- ],
- }
- },
- }
-</script>
+    </v-app-bar>
+        <VContent >
+            <router-view />
+        </VContent>
+    </div>
+    
+    </template>
+        <script>
+            export default {
+                data () {
+            return {
+            drawer: null,
+            items: [
+                { title: 'User Controller', icon: 'mdi-human-male' },
+                { title: 'Vehicles Controller', icon: 'mdi-car' },
+                    ],
+            }
+        },
+        }
+    </script>

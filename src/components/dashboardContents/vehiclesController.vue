@@ -73,14 +73,17 @@
             <v-container>             
                 <v-row>               
                     <v-col cols="12">                 
-                        <v-text-field label="Name*" v-model="form.name" required></v-text-field>              
+                        <v-text-field label="Merk kendaraan*" v-model="form.merk" required></v-text-field>              
                     </v-col>               
                     <v-col cols="12">                 
-                        <v-text-field label="Email*" v-model="form.email" required></v-text-field>               
+                        <v-text-field label="Tipe kendaraan*" v-model="form.type" required></v-text-field>               
                     </v-col>               
                     <v-col cols="12">                 
-                        <v-text-field label="Password*" v-model="form.password" type="password" required></v-text-field>               
-                    </v-col>             
+                        <v-text-field label="Plat nomor*" v-model="form.licensePlate" required></v-text-field>               
+                    </v-col>          
+                    <v-col cols="12">                 
+                        <v-text-field label="Tanggal dan waktu dimasukkan*" v-model="form.created_at" required></v-text-field>               
+                    </v-col>   
                 </v-row>           
             </v-container>           
             <small>*indicates required field</small>         
@@ -121,16 +124,20 @@
                         value: 'no',             
                     },             
                     {               
-                        text: 'Name',               
-                        value: 'name'             
+                        text: 'Merk',               
+                        value: 'merk'             
                     },             
                     {               
-                        text: 'Email',               
-                        value: 'email'             
+                        text: 'Type',               
+                        value: 'type'             
                     },             
                     {               
-                        text: 'Password',               
-                        value: 'password'             
+                        text: 'License Plate',               
+                        value: 'licenseplate'             
+                    },   
+                    {               
+                        text: 'Create At',               
+                        value: 'createat'             
                     },             
                     {               
                         text: 'Aksi',               
@@ -161,9 +168,10 @@
                         })               
                     },         
                     sendData(){             
-                        this.user.append('name', this.form.name);             
-                        this.user.append('email', this.form.email);             
-                        this.user.append('password', this.form.password);             
+                        this.user.append('merk', this.form.merk);             
+                        this.user.append('type', this.form.type);             
+                        this.user.append('licenseplate', this.form.licensePlate); 
+                        this.user.append('createat', this.form.create_at);            
                         var uri =this.$apiUrl + '/user'             
                         this.load = true             
                         this.$http.post(uri,this.user).then(response =>{               
@@ -183,9 +191,10 @@
                         })         
                     },         
                     updateData(){             
-                        this.user.append('name', this.form.name);             
-                        this.user.append('email', this.form.email);             
-                        this.user.append('password', this.form.password);             
+                        this.user.append('merk', this.form.merk);             
+                        this.user.append('type', this.form.type);             
+                        this.user.append('licenseplate', this.form.licensePlate); 
+                        this.user.append('createat', this.form.create_at);             
                         var uri = this.$apiUrl + '/user/' + this.updatedId;             
                         this.load = true             
                         this.$http.post(uri,this.user).then(response =>{ 
@@ -209,9 +218,10 @@
                 editHandler(item){           
                     this.typeInput = 'edit';           
                     this.dialog = true;           
-                    this.form.name = item.name;           
-                    this.form.email = item.email;           
-                    this.form.password = '',           
+                    this.form.merk = item.merk;           
+                    this.form.type = item.type;           
+                    this.form.licensePlate = item.licensePlate;
+                    this.form.create_at = item.create_at;           
                     this.updatedId = item.id         
                 },         
                 deleteData(deleteId){ //mengahapus data             
@@ -240,9 +250,10 @@
             },         
             resetForm(){             
                 this.form = {                
-                    name : '',               
-                    email : '',               
-                    password : ''             
+                    merk : '',               
+                    type : '',               
+                    licensePlate : '',
+                    create_at : ''       
                     }         
                 }     
             },     
